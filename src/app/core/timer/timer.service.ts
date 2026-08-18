@@ -39,7 +39,7 @@ export class TimerService {
       if (data.type === 'tick') {
         this.remainingMs.set(data.remainingMs);
       } else if (data.type === 'done') {
-        this.onWorkerDone();
+        void this.onWorkerDone();
       }
     };
     void this.reconcile();
@@ -72,11 +72,13 @@ export class TimerService {
     this.persist();
   }
 
-  reset(): void {
-    if (this.phase() === 'working') {
-      void this.logWorkSession(true);
-    }
+  async reset(): Promise<void> {
+    const wasWorking = this.phase() === 'working';
     this.postCommand({ cmd: 'reset' });
+    if (wasWorking) {
+      // Await so a stats reload triggered by the phase flip below always sees this entry.
+      await this.logWorkSession(true);
+    }
     this.clearTimedState();
     this.phase.set('idle');
     this.previousPhase.set(null);
@@ -93,16 +95,34 @@ export class TimerService {
     this.beginTimedPhase('break', settings.defaultBreakMinutes * 60_000);
   }
 
+  /** User-initiated shortcut: cut the work session short and jump straight to a break,
+   *  bypassing NOTIFYING (no notification needed for something the user chose themselves). */
+  async skipToBreak(): Promise<void> {
+    const current = this.phase();
+    const eligible = current === 'working' || (current === 'paused' && this.previousPhase() === 'working');
+    if (!eligible) return;
+
+    this.postCommand({ cmd: 'reset' });
+    await this.logWorkSession(true);
+    this.previousPhase.set(null);
+
+    const settings = this.settingsRepo.settings();
+    const set = await this.exerciseSets.pickForBreak(settings.excludedCategories, settings.excludedExerciseIds);
+    this.currentSet.set(set ?? null);
+    this.currentStepIndex.set(0);
+    this.beginTimedPhase('break', settings.defaultBreakMinutes * 60_000);
+  }
+
   advanceStep(): void {
     if (this.phase() !== 'break') return;
     const set = this.currentSet();
     if (!set) {
-      this.finishBreak(false);
+      void this.finishBreak(false);
       return;
     }
     const next = this.currentStepIndex() + 1;
     if (next >= set.steps.length) {
-      this.finishBreak(false);
+      void this.finishBreak(false);
     } else {
       this.currentStepIndex.set(next);
       this.persist();
@@ -111,7 +131,7 @@ export class TimerService {
 
   endBreakEarly(): void {
     if (this.phase() !== 'break') return;
-    this.finishBreak(true);
+    void this.finishBreak(true);
   }
 
   private beginTimedPhase(phase: 'working' | 'break', duration: number): void {
@@ -124,29 +144,28 @@ export class TimerService {
     this.persist();
   }
 
-  private onWorkerDone(): void {
+  private async onWorkerDone(): Promise<void> {
     if (this.phase() === 'working') {
-      void this.logWorkSession(false);
+      await this.logWorkSession(false);
       this.endTimestamp.set(null);
       this.phase.set('notifying');
       this.persist();
     } else if (this.phase() === 'break') {
-      this.finishBreak(false);
+      await this.finishBreak(false);
     }
   }
 
-  private finishBreak(skipped: boolean): void {
+  private async finishBreak(skipped: boolean): Promise<void> {
     this.postCommand({ cmd: 'reset' });
-    void this.logBreakSession(skipped);
+    // Await so the phase flip to 'idle' below — which readers key their stats reload off of —
+    // never fires before this entry is actually committed and visible to a fresh query.
+    await this.logBreakSession(skipped);
     const autoStart = this.settingsRepo.settings().autoStartNextSession;
     this.clearTimedState();
+    this.phase.set('idle');
+    this.persist();
     if (autoStart) {
-      this.phase.set('idle');
-      this.persist();
       this.start();
-    } else {
-      this.phase.set('idle');
-      this.persist();
     }
   }
 
@@ -222,7 +241,7 @@ export class TimerService {
     switch (state.phase) {
       case 'working':
         if (elapsed) {
-          void this.logWorkSession(false);
+          await this.logWorkSession(false);
           this.phase.set('notifying');
           this.persist();
         } else if (state.endTimestamp && state.durationMs) {
@@ -235,7 +254,11 @@ export class TimerService {
         break;
       case 'break':
         if (elapsed) {
-          this.finishBreak(false);
+          // Restore the planned duration first so finishBreak logs the real break length
+          // instead of reading the signals' unset defaults (0/0).
+          if (state.durationMs) this.durationMs.set(state.durationMs);
+          this.remainingMs.set(0);
+          await this.finishBreak(false);
         } else if (state.endTimestamp && state.durationMs) {
           this.durationMs.set(state.durationMs);
           this.endTimestamp.set(state.endTimestamp);

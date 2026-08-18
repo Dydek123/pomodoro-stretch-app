@@ -34,6 +34,7 @@
       </div>
       <div class="actions__layer" [class.actions__layer--visible]="timer.phase() === 'working' || timer.phase() === 'paused'">
         <app-button (pressed)="pauseOrResume()">{{ timer.isPaused() ? 'Resume' : 'Pause' }}</app-button>
+        <app-button variant="ghost" (pressed)="skipToBreak()" data-tooltip="End this session now and start your break">Skip to break</app-button>
         <app-button variant="ghost" (pressed)="reset()">Reset</app-button>
       </div>
     </div>

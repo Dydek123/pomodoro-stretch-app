@@ -98,8 +98,12 @@ export class TimerScreenComponent implements OnInit, OnDestroy {
   }
 
   protected reset(): void {
-    this.timer.reset();
+    void this.timer.reset();
     this.pulseTick.update((t) => t + 1);
+  }
+
+  protected skipToBreak(): void {
+    void this.timer.skipToBreak();
   }
 
   protected startBreak(): void {
