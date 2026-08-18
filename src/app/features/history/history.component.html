@@ -1,0 +1,53 @@
+<div class="history-screen">
+  <div class="history-header">
+    <h1>Your activity</h1>
+    <span class="muted">last 12 weeks</span>
+  </div>
+
+  <div class="stat-grid">
+    <app-stat-card label="Breaks today" [value]="breaksToday()" unit=" today"></app-stat-card>
+    <app-stat-card label="This week" [value]="breaksThisWeek()" unit=" breaks"></app-stat-card>
+    <app-stat-card label="Streak" [value]="streak()" unit=" days in a row" [accent]="true"></app-stat-card>
+    <app-stat-card label="Stretching time" [value]="stretchThisWeekLabel()" unit=" this week"></app-stat-card>
+  </div>
+
+  <div class="panels">
+    <div class="panel heatmap-panel">
+      <div class="panel__head">
+        <span class="panel__title">Daily breaks</span>
+        <div class="legend">
+          <span>less</span>
+          <span class="legend__swatch level-0"></span>
+          <span class="legend__swatch level-1"></span>
+          <span class="legend__swatch level-2"></span>
+          <span class="legend__swatch level-3"></span>
+          <span>more</span>
+        </div>
+      </div>
+      <div class="heatmap">
+        @for (week of heatWeeks(); track $index) {
+          <div class="heatmap__col">
+            @for (cell of week; track cell.date.getTime()) {
+              <div class="heatmap__cell" [class]="'level-' + cell.level" [title]="cell.date.toDateString()"></div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="panel week-panel">
+      <span class="panel__title">Stretching this week</span>
+      <div class="week-bars">
+        @for (bar of weekBars(); track bar.label) {
+          <div class="week-bar">
+            <div class="week-bar__track">
+              <div class="week-bar__fill" [style.height.%]="bar.heightPct"></div>
+            </div>
+            <span class="week-bar__label">{{ bar.label }}</span>
+          </div>
+        }
+      </div>
+      <span class="best-day">{{ bestDayLabel() }}</span>
+    </div>
+  </div>
+</div>

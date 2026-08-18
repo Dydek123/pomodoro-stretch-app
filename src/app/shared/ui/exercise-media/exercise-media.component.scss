@@ -1,0 +1,39 @@
+.exercise-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background-image: repeating-linear-gradient(45deg, var(--color-accent-soft), var(--color-accent-soft) 10px, #f2f8f5 10px, #f2f8f5 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--compact {
+    border-radius: 10px;
+  }
+}
+
+.exercise-media__caption {
+  font: 400 13px var(--font-mono);
+  color: #6fa08b;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px dashed var(--color-accent-border);
+}
+
+.exercise-media__badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 18px var(--font-heading);
+  color: var(--color-accent);
+}

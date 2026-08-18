@@ -1,0 +1,68 @@
+<div class="break-overlay">
+  <div class="break-header">
+    <div class="break-header__label">
+      <span class="dot"></span>
+      <span>
+        Break
+        @if (timer.currentSet(); as set) {
+          · {{ set.name }}
+        }
+      </span>
+    </div>
+    <span class="break-header__time">{{ timeLabel() }} <span class="muted">left in break</span></span>
+  </div>
+
+  <div class="break-body">
+    <div class="step-list">
+      @if (timer.currentSet(); as set) {
+        @for (step of set.steps; track step.id; let i = $index) {
+          <div
+            class="step-row"
+            [class.step-row--done]="i < timer.currentStepIndex()"
+            [class.step-row--current]="i === timer.currentStepIndex()"
+          >
+            <span class="step-row__index">{{ i < timer.currentStepIndex() ? '✓' : i + 1 }}</span>
+            <div class="step-row__thumb stripe-placeholder"></div>
+            <div class="step-row__text">
+              <span class="step-row__name">{{ step.text }}</span>
+              <span class="step-row__meta">{{ stepMeta(step) }}</span>
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="step-list__empty">No exercise sets available — check Settings.</div>
+      }
+    </div>
+
+    <div class="detail-panel">
+      <app-exercise-media
+        class="detail-panel__media"
+        [step]="timer.currentStep()"
+        [badge]="stepBadge(timer.currentStep())"
+      ></app-exercise-media>
+      <div class="detail-panel__footer">
+        <div class="detail-panel__text">
+          <span class="detail-panel__name">{{ timer.currentStep()?.text ?? 'Take a breath' }}</span>
+          @if (timer.currentStep(); as step) {
+            <span class="detail-panel__meta">{{ stepMeta(step) }}</span>
+          }
+        </div>
+        <app-button (pressed)="done()">Done, next ›</app-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="break-footer">
+    <div class="break-footer__links">
+      <button type="button" class="link" (click)="skip()">Skip exercise</button>
+      <button type="button" class="link link--muted" (click)="endEarly()">End break early</button>
+    </div>
+    <div class="break-footer__toggle">
+      <app-toggle-switch
+        [checked]="settingsRepo.settings().autoStartNextSession"
+        (checkedChange)="toggleAutoStart($event)"
+      ></app-toggle-switch>
+      <span>Auto-start next session</span>
+    </div>
+  </div>
+</div>

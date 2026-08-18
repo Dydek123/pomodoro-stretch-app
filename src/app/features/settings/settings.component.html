@@ -1,0 +1,101 @@
+<div class="settings-screen">
+  <h1 class="settings-title">Settings</h1>
+
+  <div class="settings-grid">
+    <div class="panel">
+      <div class="row">
+        <div class="row__text">
+          <span class="row__label">Work interval</span>
+          <span class="row__hint">Default session length</span>
+        </div>
+        <select class="chip-select" (change)="setWorkMinutes($any($event.target).value)">
+          @for (m of workOptions; track m) {
+            <option [value]="m" [selected]="m === settingsRepo.settings().defaultWorkMinutes">{{ m }} min</option>
+          }
+        </select>
+      </div>
+      <div class="row">
+        <div class="row__text">
+          <span class="row__label">Break length</span>
+          <span class="row__hint">Guided stretch duration</span>
+        </div>
+        <select class="chip-select" (change)="setBreakMinutes($any($event.target).value)">
+          @for (m of breakOptions; track m) {
+            <option [value]="m" [selected]="m === settingsRepo.settings().defaultBreakMinutes">{{ m }} min</option>
+          }
+        </select>
+      </div>
+      <div class="row row--last">
+        <div class="row__text">
+          <span class="row__label">Auto-start next session</span>
+          <span class="row__hint">Begin work right after each break</span>
+        </div>
+        <app-toggle-switch [checked]="settingsRepo.settings().autoStartNextSession" (checkedChange)="toggleAutoStart($event)"></app-toggle-switch>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <div class="row__text">
+          <span class="row__label">End-of-session sound</span>
+          <span class="row__hint">Soft chime</span>
+        </div>
+        <app-toggle-switch [checked]="settingsRepo.settings().soundEnabled" (checkedChange)="toggleSound($event)"></app-toggle-switch>
+      </div>
+      <div class="row">
+        <div class="row__text">
+          <span class="row__label">Browser notifications</span>
+          <span class="row__hint">Also when tab is in background</span>
+        </div>
+        <app-toggle-switch [checked]="settingsRepo.settings().browserNotificationsEnabled" (checkedChange)="toggleNotifications($event)"></app-toggle-switch>
+      </div>
+      <div class="row row--last row--volume">
+        <span class="row__label">Volume</span>
+        <input
+          class="volume-slider"
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          [value]="settingsRepo.settings().soundVolume"
+          (input)="setVolume($any($event.target).value)"
+        />
+      </div>
+    </div>
+
+    <div class="panel panel--block">
+      <div class="panel__header">
+        <span class="panel__title">Exercise categories</span>
+        <span class="panel__hint">Sets are built only from what's on</span>
+      </div>
+      <div class="category-list">
+        @for (cat of categoryOptions; track cat.value) {
+          <div class="category-row">
+            <span>{{ cat.label }}</span>
+            <app-toggle-switch [checked]="isCategoryEnabled(cat.value)" (checkedChange)="toggleCategory(cat.value, $event)"></app-toggle-switch>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="panel panel--block">
+      <div class="panel__header">
+        <span class="panel__title">Excluded exercises</span>
+        <span class="panel__hint">Never suggested, e.g. due to injury</span>
+      </div>
+      <div class="chip-list">
+        @for (set of sets(); track set.id) {
+          <button
+            type="button"
+            class="chip"
+            [class.chip--excluded]="isSetExcluded(set.id)"
+            (click)="toggleSetExclusion(set.id)"
+          >
+            <span>{{ set.name }}</span>
+            <span class="chip__mark">{{ isSetExcluded(set.id) ? '✕' : '' }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

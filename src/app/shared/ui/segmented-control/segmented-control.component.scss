@@ -1,0 +1,23 @@
+.segmented {
+  display: inline-flex;
+  background: var(--color-chip-bg);
+  border-radius: 14px;
+  padding: 4px;
+  gap: 2px;
+}
+
+.segmented__item {
+  border: none;
+  background: transparent;
+  padding: 9px 22px;
+  border-radius: 10px;
+  font: 500 14px var(--font-body);
+  color: var(--color-text-soft);
+
+  &--active {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-weight: 600;
+    color: var(--color-accent-dark);
+  }
+}

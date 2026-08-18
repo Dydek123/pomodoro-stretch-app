@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  height: 100%;
+  animation: route-enter 260ms ease-out;
+}
+
+.history-screen {
+  padding: 26px 44px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.history-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+
+  h1 {
+    font: 600 26px var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  .muted {
+    font: 400 13px var(--font-body);
+    color: var(--color-text-mute);
+  }
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.panels {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  min-height: 320px;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-sm);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel__title {
+  font: 500 15px var(--font-heading);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 400 11px var(--font-body);
+  color: var(--color-text-mute);
+}
+
+.legend__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.level-0 {
+  background: #f0eae1;
+}
+
+.level-1 {
+  background: #cde4d9;
+}
+
+.level-2 {
+  background: #8cc0a9;
+}
+
+.level-3 {
+  background: #3e8e72;
+}
+
+.heatmap {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.heatmap__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.heatmap__cell {
+  flex: 1;
+  border-radius: 5px;
+  min-height: 8px;
+}
+
+.week-bars {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.week-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.week-bar__track {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.week-bar__fill {
+  width: 100%;
+  border-radius: 8px;
+  background: #8cc0a9;
+  min-height: 6px;
+}
+
+.week-bar__label {
+  font: 400 11px var(--font-body);
+  color: var(--color-text-mute);
+}
+
+.best-day {
+  font: 400 12px var(--font-body);
+  color: var(--color-text-mute);
+}

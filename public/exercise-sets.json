@@ -1,0 +1,83 @@
+[
+  {
+    "id": "wrists-1",
+    "name": "Wrists & forearms",
+    "category": "wrists",
+    "durationMinutes": 5,
+    "difficulty": "easy",
+    "equipment": "none",
+    "isCustom": false,
+    "steps": [
+      { "id": "wrists-1-s1", "type": "exercise", "text": "Wrist circles", "reps": 10, "perSide": true },
+      { "id": "wrists-1-s2", "type": "hold", "text": "Prayer stretch", "durationSeconds": 20 },
+      { "id": "wrists-1-s3", "type": "exercise", "text": "Finger fan & fist", "reps": 8 },
+      { "id": "wrists-1-s4", "type": "hold", "text": "Forearm stretch, palm up", "durationSeconds": 20, "perSide": true },
+      { "id": "wrists-1-s5", "type": "hold", "text": "Shake it out", "durationSeconds": 15 },
+      { "id": "wrists-1-s6", "type": "exercise", "text": "Slow breathing", "reps": 3 }
+    ]
+  },
+  {
+    "id": "full-body-1",
+    "name": "Full body reset",
+    "category": "full-body",
+    "durationMinutes": 5,
+    "difficulty": "medium",
+    "equipment": "none",
+    "isCustom": false,
+    "steps": [
+      { "id": "full-body-1-s1", "type": "hold", "text": "Standing forward fold", "durationSeconds": 20 },
+      { "id": "full-body-1-s2", "type": "exercise", "text": "Deep squats", "reps": 10 },
+      { "id": "full-body-1-s3", "type": "exercise", "text": "Cat-cow stretch", "reps": 8 },
+      { "id": "full-body-1-s4", "type": "hold", "text": "Seated spinal twist", "durationSeconds": 20, "perSide": true },
+      { "id": "full-body-1-s5", "type": "hold", "text": "Overhead reach & side bend", "durationSeconds": 15, "perSide": true },
+      { "id": "full-body-1-s6", "type": "exercise", "text": "Shoulder rolls", "reps": 10 }
+    ]
+  },
+  {
+    "id": "eyes-1",
+    "name": "Eyes · 20-20-20",
+    "category": "eyes",
+    "durationMinutes": 1,
+    "difficulty": "easy",
+    "equipment": "none",
+    "isCustom": false,
+    "steps": [
+      { "id": "eyes-1-s1", "type": "hold", "text": "Look at something 20 ft away", "durationSeconds": 20 },
+      { "id": "eyes-1-s2", "type": "exercise", "text": "Blink rapidly", "reps": 15 },
+      { "id": "eyes-1-s3", "type": "exercise", "text": "Figure-eight eye movement", "reps": 5 },
+      { "id": "eyes-1-s4", "type": "hold", "text": "Palming — cover eyes, relax", "durationSeconds": 20 },
+      { "id": "eyes-1-s5", "type": "exercise", "text": "Focus near-far shift", "reps": 8 }
+    ]
+  },
+  {
+    "id": "neck-1",
+    "name": "Neck & shoulders",
+    "category": "neck",
+    "durationMinutes": 3,
+    "difficulty": "easy",
+    "equipment": "none",
+    "isCustom": false,
+    "steps": [
+      { "id": "neck-1-s1", "type": "hold", "text": "Neck tilt, side to side", "durationSeconds": 15, "perSide": true },
+      { "id": "neck-1-s2", "type": "exercise", "text": "Chin tucks", "reps": 10 },
+      { "id": "neck-1-s3", "type": "exercise", "text": "Neck rolls", "reps": 5, "perSide": true },
+      { "id": "neck-1-s4", "type": "hold", "text": "Upper trap stretch", "durationSeconds": 20, "perSide": true },
+      { "id": "neck-1-s5", "type": "exercise", "text": "Isometric neck press", "reps": 5 }
+    ]
+  },
+  {
+    "id": "breathing-1",
+    "name": "Breathing reset",
+    "category": "breathing",
+    "durationMinutes": 3,
+    "difficulty": "easy",
+    "equipment": "none",
+    "isCustom": false,
+    "steps": [
+      { "id": "breathing-1-s1", "type": "exercise", "text": "Box breathing (4-4-4-4)", "reps": 4 },
+      { "id": "breathing-1-s2", "type": "hold", "text": "Diaphragmatic breathing", "durationSeconds": 30 },
+      { "id": "breathing-1-s3", "type": "exercise", "text": "4-7-8 breathing", "reps": 3 },
+      { "id": "breathing-1-s4", "type": "exercise", "text": "Sigh breath release", "reps": 5 }
+    ]
+  }
+]

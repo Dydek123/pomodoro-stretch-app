@@ -1,0 +1,21 @@
+<div class="app-shell">
+  <header class="topbar">
+    <a routerLink="/" class="brand">
+      <span class="brand__logo">u</span>
+      <span class="brand__name">unbend</span>
+    </a>
+    <nav class="topbar__nav">
+      <a routerLink="/library" routerLinkActive="topbar__icon--active" class="topbar__icon" aria-label="Exercise library" data-tooltip="Exercise library">▦</a>
+      <a routerLink="/history" routerLinkActive="topbar__icon--active" class="topbar__icon" aria-label="History" data-tooltip="History">◔</a>
+      <a routerLink="/settings" routerLinkActive="topbar__icon--active" class="topbar__icon" aria-label="Settings" data-tooltip="Settings">⚙</a>
+    </nav>
+  </header>
+
+  <main class="app-shell__content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+@if (timer.isOnBreak()) {
+  <app-break-screen></app-break-screen>
+}

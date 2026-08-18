@@ -1,0 +1,60 @@
+<div class="library-screen">
+  <div class="library-header">
+    <h1>Exercise sets</h1>
+    <div class="filters">
+      @for (f of filters; track f.value) {
+        <button
+          type="button"
+          class="filter-pill"
+          [class.filter-pill--active]="activeFilter() === f.value"
+          (click)="setFilter(f.value)"
+        >
+          {{ f.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="set-grid">
+    @for (set of filteredSets(); track set.id) {
+      <div class="set-card">
+        <div class="set-card__media">
+          <div class="set-card__thumb stripe-placeholder">
+            <span class="set-card__thumb-label">{{ set.steps.length }} steps</span>
+          </div>
+          <div class="set-card__side">
+            <div class="stripe-placeholder"></div>
+            <div class="stripe-placeholder"></div>
+          </div>
+        </div>
+        <div class="set-card__info">
+          <div class="set-card__title-row">
+            <span class="set-card__name">{{ set.name }}</span>
+            <span class="set-card__category">{{ categoryLabel(set.category) }}</span>
+          </div>
+          <span class="set-card__meta">{{ set.durationMinutes }} min · {{ set.steps.length }} steps</span>
+        </div>
+        <div class="set-card__footer">
+          <div class="effort">
+            <span class="effort__label">effort</span>
+            <span class="dot" [class.dot--on]="effortLevel(set.difficulty) >= 1"></span>
+            <span class="dot" [class.dot--on]="effortLevel(set.difficulty) >= 2"></span>
+            <span class="dot" [class.dot--on]="effortLevel(set.difficulty) >= 3"></span>
+          </div>
+          <button type="button" class="preview-link" (click)="togglePreview(set.id)">
+            {{ expandedId() === set.id ? 'Hide' : 'Preview' }} ›
+          </button>
+        </div>
+        @if (expandedId() === set.id) {
+          <ul class="step-preview">
+            @for (step of set.steps; track step.id) {
+              <li>{{ step.text }}</li>
+            }
+          </ul>
+        }
+      </div>
+    } @empty {
+      <p class="empty">No sets in this category yet.</p>
+    }
+  </div>
+</div>

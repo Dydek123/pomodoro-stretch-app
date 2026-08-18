@@ -1,0 +1,230 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: var(--font-heading);
+  animation: route-enter 260ms ease-out;
+}
+
+.timer-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.timer-screen__center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 24px;
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.22, 0.8, 0.32, 1);
+  animation-fill-mode: both;
+}
+
+/* Identical keyframes under two names — start()/reset() alternate between them so the
+   animation-name binding always "changes", which is what makes CSS replay it. */
+@keyframes timer-pulse-a {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.97);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes timer-pulse-b {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.97);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+
+.status-label {
+  font: 500 13px var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--color-text-soft);
+  text-transform: uppercase;
+}
+
+.digits {
+  font: 600 clamp(72px, 14vw, 176px) / 1 var(--font-heading);
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-dark);
+}
+
+.digits-caption {
+  font: 400 13px var(--font-body);
+  color: var(--color-text-mute);
+  margin-top: -12px;
+}
+
+.progress {
+  max-width: 560px;
+}
+
+.preset-wrap {
+  max-height: 60px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 260ms ease, opacity 180ms ease;
+
+  &--hidden {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* Both action layers occupy the same grid cell so the container auto-sizes to the
+   larger of the two and they crossfade in place instead of swapping hard. */
+.actions {
+  display: grid;
+  justify-items: center;
+  margin-top: 6px;
+}
+
+.actions__layer {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms ease;
+
+  &--visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+}
+
+.bottom-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 0 44px 32px;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-sm);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.next-break__thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-tile);
+  flex-shrink: 0;
+  background-image: repeating-linear-gradient(45deg, var(--color-accent-soft), var(--color-accent-soft) 7px, var(--color-surface) 7px, var(--color-surface) 14px);
+}
+
+.eye-break__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.next-break__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.eyebrow {
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.title {
+  font: 600 15px var(--font-heading);
+  color: var(--color-text);
+
+  &.mono {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.meta {
+  font: 400 12px var(--font-body);
+  color: var(--color-text-mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stats {
+  justify-content: space-around;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat__value {
+  font: 600 22px var(--font-heading);
+  color: var(--color-text);
+
+  &--accent {
+    color: var(--color-accent-dark);
+  }
+}
+
+.stat__label {
+  font: 400 12px var(--font-body);
+  color: var(--color-text-mute);
+}
+
+.divider {
+  width: 1px;
+  height: 34px;
+  background: var(--color-border);
+}

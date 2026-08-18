@@ -1,0 +1,78 @@
+<div class="timer-screen">
+  <div class="timer-screen__center" [style.animation-name]="pulseAnimName()">
+    <div class="status-row">
+      <span class="status-dot"></span>
+      <span class="status-label">
+        @switch (timer.phase()) {
+          @case ('working') { Focus session · {{ minutesLabel() }} min }
+          @case ('paused') { Paused }
+          @case ('notifying') { Session complete }
+          @default { Ready when you are }
+        }
+      </span>
+    </div>
+
+    <div class="digits">{{ timeLabel() }}</div>
+    <span class="digits-caption">of {{ minutesLabel() }} min</span>
+
+    <app-progress-bar class="progress" [progress]="timer.progress()"></app-progress-bar>
+
+    <div class="preset-wrap" [class.preset-wrap--hidden]="timer.phase() !== 'idle'">
+      <app-segmented-control
+        [options]="presetOptions"
+        [value]="selectedPreset()"
+        (valueChange)="selectPreset($event)"
+      ></app-segmented-control>
+    </div>
+
+    <div class="actions">
+      <div class="actions__layer" [class.actions__layer--visible]="timer.phase() === 'idle'">
+        <app-button size="lg" (pressed)="start()">Start</app-button>
+      </div>
+      <div class="actions__layer" [class.actions__layer--visible]="timer.phase() === 'notifying'">
+        <app-button size="lg" (pressed)="startBreak()">Start break</app-button>
+      </div>
+      <div class="actions__layer" [class.actions__layer--visible]="timer.phase() === 'working' || timer.phase() === 'paused'">
+        <app-button (pressed)="pauseOrResume()">{{ timer.isPaused() ? 'Resume' : 'Pause' }}</app-button>
+        <app-button variant="ghost" (pressed)="reset()">Reset</app-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-cards">
+    <div class="card next-break">
+      <div class="next-break__thumb"></div>
+      <div class="next-break__body">
+        <span class="eyebrow">Next break · {{ settingsRepo.settings().defaultBreakMinutes }} min</span>
+        <span class="title">Guided stretch</span>
+        <span class="meta">Picked automatically from your enabled categories</span>
+      </div>
+    </div>
+
+    <div class="card eye-break">
+      <div class="eye-break__icon">◉</div>
+      <div class="next-break__body">
+        <span class="eyebrow">Eyes 20-20-20</span>
+        <span class="title mono">Look away in {{ eyeBreakLabel() }}</span>
+        <span class="meta">20 sec · something 20 ft away</span>
+      </div>
+    </div>
+
+    <div class="card stats">
+      <div class="stat">
+        <span class="stat__value">{{ breaksToday() }}</span>
+        <span class="stat__label">breaks today</span>
+      </div>
+      <div class="divider"></div>
+      <div class="stat">
+        <span class="stat__value">{{ stretchTodayLabel() }}</span>
+        <span class="stat__label">stretching</span>
+      </div>
+      <div class="divider"></div>
+      <div class="stat">
+        <span class="stat__value stat__value--accent">{{ streak() }}</span>
+        <span class="stat__label">day streak</span>
+      </div>
+    </div>
+  </div>
+</div>

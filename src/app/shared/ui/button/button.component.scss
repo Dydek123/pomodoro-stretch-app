@@ -1,0 +1,47 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 40px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--color-accent);
+  color: #fff;
+  font: 600 15px var(--font-heading);
+  box-shadow: var(--shadow-cta);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--ghost {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text-soft);
+    font: 500 15px var(--font-body);
+    box-shadow: none;
+  }
+
+  &--dark {
+    background: var(--color-text);
+    color: var(--color-bg);
+    box-shadow: none;
+  }
+
+  &--lg {
+    padding: 16px 54px;
+    font-size: 16px;
+  }
+}

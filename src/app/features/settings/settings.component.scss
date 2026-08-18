@@ -1,0 +1,146 @@
+:host {
+  display: block;
+  height: 100%;
+  animation: route-enter 260ms ease-out;
+}
+
+.settings-screen {
+  padding: 26px 44px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.settings-title {
+  font: 600 26px var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-content: start;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-sm);
+  padding: 6px 22px;
+  display: flex;
+  flex-direction: column;
+
+  &--block {
+    padding: 22px;
+    gap: 14px;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+  gap: 20px;
+
+  &--last {
+    border-bottom: none;
+  }
+
+  &--volume {
+    align-items: center;
+  }
+}
+
+.row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.row__label {
+  font: 500 14px var(--font-body);
+  color: var(--color-text);
+}
+
+.row__hint {
+  font: 400 12px var(--font-body);
+  color: var(--color-text-mute);
+}
+
+.chip-select {
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: var(--color-chip-bg);
+  border: none;
+  font: 600 13px var(--font-mono);
+  color: var(--color-text);
+}
+
+.volume-slider {
+  flex: 1;
+  max-width: 220px;
+  accent-color: var(--color-accent);
+}
+
+.panel__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.panel__title {
+  font: 500 15px var(--font-heading);
+}
+
+.panel__hint {
+  font: 400 12px var(--font-body);
+  color: var(--color-text-mute);
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  font: 400 14px var(--font-body);
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--color-chip-bg);
+  border: 1px solid transparent;
+  font: 500 13px var(--font-body);
+  color: var(--color-text);
+
+  &--excluded {
+    background: #fff;
+    border-color: var(--color-track);
+    color: var(--color-text-mute);
+    text-decoration: line-through;
+  }
+}
+
+.chip__mark {
+  color: var(--color-text-faint);
+  text-decoration: none;
+}

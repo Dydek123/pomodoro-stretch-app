@@ -1,0 +1,193 @@
+:host {
+  display: block;
+  height: 100%;
+  animation: route-enter 260ms ease-out;
+}
+
+.library-screen {
+  padding: 26px 44px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.library-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  h1 {
+    font: 600 26px var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-soft);
+  font: 500 13px var(--font-body);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &--active {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+  }
+}
+
+.set-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-content: start;
+}
+
+.set-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Angular reuses a card's DOM node across filter changes (tracked by set.id) only
+     while it stays visible; a filter switch removes and re-inserts it fresh, so this
+     replays on every reveal without any JS retrigger trick. */
+  animation: route-enter 240ms ease-out;
+}
+
+.set-card__media {
+  display: flex;
+  gap: 8px;
+}
+
+.set-card__thumb {
+  flex: 1.6;
+  height: 110px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.set-card__thumb-label {
+  font: 400 11px var(--font-mono);
+  color: #8fa99c;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.set-card__side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  > div {
+    flex: 1;
+    border-radius: 10px;
+  }
+}
+
+.set-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.set-card__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.set-card__name {
+  font: 600 16px var(--font-heading);
+}
+
+.set-card__category {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  font: 500 11px var(--font-mono);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.set-card__meta {
+  font: 400 13px var(--font-body);
+  color: var(--color-text-mute);
+}
+
+.set-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.effort {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.effort__label {
+  font: 400 11px var(--font-body);
+  color: var(--color-text-faint);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-border);
+
+  &--on {
+    background: var(--color-accent);
+  }
+}
+
+.preview-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: 500 13px var(--font-body);
+  color: var(--color-accent);
+}
+
+.step-preview {
+  margin: 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--color-border-soft);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font: 400 13px var(--font-body);
+  color: var(--color-text-soft);
+}
+
+.empty {
+  grid-column: 1 / -1;
+  color: var(--color-text-mute);
+  font: 400 14px var(--font-body);
+}
