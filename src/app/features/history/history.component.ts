@@ -7,10 +7,14 @@ import { breaksOnDay, computeStreak, formatMinutes, totalBreakSecondsOnDay } fro
 interface HeatCell {
   date: Date;
   level: number;
+  breaks: number;
+  seconds: number;
 }
 
 interface WeekBar {
   label: string;
+  date: Date;
+  breaks: number;
   seconds: number;
   heightPct: number;
 }
@@ -67,8 +71,9 @@ export class HistoryComponent implements OnInit {
     for (let i = 83; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
-      const count = breaksOnDay(this.sessions(), d).length;
-      days.push({ date: d, level: heatLevel(count) });
+      const breaks = breaksOnDay(this.sessions(), d).length;
+      const seconds = totalBreakSecondsOnDay(this.sessions(), d);
+      days.push({ date: d, level: heatLevel(breaks), breaks, seconds });
     }
     const weeks: HeatCell[][] = [];
     for (let w = 0; w < 12; w++) {
@@ -79,18 +84,32 @@ export class HistoryComponent implements OnInit {
 
   private buildWeekBars(): WeekBar[] {
     const today = new Date();
-    const days: { label: string; seconds: number }[] = [];
+    const days: { label: string; date: Date; breaks: number; seconds: number }[] = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
-      days.push({ label: dayLabel(d), seconds: totalBreakSecondsOnDay(this.sessions(), d) });
+      days.push({
+        label: dayLabel(d),
+        date: d,
+        breaks: breaksOnDay(this.sessions(), d).length,
+        seconds: totalBreakSecondsOnDay(this.sessions(), d),
+      });
     }
     const max = Math.max(1, ...days.map((d) => d.seconds));
     return days.map((d) => ({
       label: d.label,
+      date: d.date,
+      breaks: d.breaks,
       seconds: d.seconds,
       heightPct: d.seconds === 0 ? 4 : Math.max(6, Math.round((d.seconds / max) * 100)),
     }));
+  }
+
+  protected dayTooltip(date: Date, breaks: number, seconds: number): string {
+    const dateLabel = date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    if (breaks === 0) return `${dateLabel} · no breaks`;
+    const breakWord = breaks === 1 ? 'break' : 'breaks';
+    return `${dateLabel} · ${breaks} ${breakWord} · ${formatMinutes(seconds)}`;
   }
 
   private buildBestDayLabel(): string {

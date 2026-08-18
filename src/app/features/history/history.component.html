@@ -28,7 +28,11 @@
         @for (week of heatWeeks(); track $index) {
           <div class="heatmap__col">
             @for (cell of week; track cell.date.getTime()) {
-              <div class="heatmap__cell" [class]="'level-' + cell.level" [title]="cell.date.toDateString()"></div>
+              <div
+                class="heatmap__cell"
+                [class]="'level-' + cell.level"
+                [attr.data-tooltip]="dayTooltip(cell.date, cell.breaks, cell.seconds)"
+              ></div>
             }
           </div>
         }
@@ -39,7 +43,7 @@
       <span class="panel__title">Stretching this week</span>
       <div class="week-bars">
         @for (bar of weekBars(); track bar.label) {
-          <div class="week-bar">
+          <div class="week-bar" [attr.data-tooltip]="dayTooltip(bar.date, bar.breaks, bar.seconds)">
             <div class="week-bar__track">
               <div class="week-bar__fill" [style.height.%]="bar.heightPct"></div>
             </div>
